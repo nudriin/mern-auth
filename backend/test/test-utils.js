@@ -1,4 +1,5 @@
 import { prismaClient } from "../src/app/database.js";
+import bcrypt from "bcrypt";
 
 const removeTestUser = async () => {
     await prismaClient.user.deleteMany({

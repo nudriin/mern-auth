@@ -42,12 +42,12 @@ export default function SignUp() {
             <h1 className="text-3xl text-center font-bold my-6">Sign Up</h1>
             {/* Ketika di submit akan menjalan function  */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 justify-center">
-                <input type="text" name="username" id="username" placeholder="Username" className="bg-slate-100 py-2 px-3 rounded-lg" onChange={handleChange} />
-                <input type="text" name="email" id="email" placeholder="Email" className="bg-slate-100 py-2 px-3 rounded-lg" onChange={handleChange} />
-                <input type="text" name="name" id="name" placeholder="Name" className="bg-slate-100 py-2 px-3 rounded-lg" onChange={handleChange} />
-                <input type="password" name="password" id="password" placeholder="Password" className="bg-slate-100 py-2 px-3 rounded-lg" onChange={handleChange} />
+                <input type="text" name="username" id="username" placeholder="Username" className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} />
+                <input type="text" name="email" id="email" placeholder="Email" className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} />
+                <input type="text" name="name" id="name" placeholder="Name" className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} />
+                <input type="password" name="password" id="password" placeholder="Password" className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} />
                 {/* jika loading true maka akan di disabled */}
-                <button disabled={loading} className="bg-slate-800 text-white p-2 rounded-lg hover:opacity-95">
+                <button disabled={loading} className="bg-slate-800 text-white p-3 rounded-lg hover:opacity-95">
                     {/* jika tidak di klik maka loading akan false dan jika di klik loading akan true */}
                     {loading ? "Loading..." : "Sign up"}
                 </button>

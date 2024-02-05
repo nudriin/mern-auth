@@ -122,3 +122,78 @@ describe("POST /api/users", () => {
 
 
 });
+
+describe("POST /api/users/login", () => {
+    beforeEach(async () => {
+        await createTestUser();
+    });
+
+    afterEach(async () => {
+        await removeTestUser();
+    });
+
+    it("Should success login", async () => {
+        const response = await supertest(web)
+        .post("/api/users/login")
+        .send({
+            username : "test",
+            password : "12345678"
+        });
+
+        console.log(response.body);
+        expect(response.status).toBe(200);
+        expect(response.body.data.token).toBeDefined();
+    });
+
+    it("Should reject login if username invalid", async () => {
+        const response = await supertest(web)
+        .post("/api/users/login")
+        .send({
+            username : "testss",
+            password : "12345678"
+        });
+
+        console.log(response.body);
+        expect(response.status).toBe(404);
+        expect(response.body.errors).toBeDefined();
+    });
+
+    it("Should reject login if password invalid", async () => {
+        const response = await supertest(web)
+        .post("/api/users/login")
+        .send({
+            username : "test",
+            password : "123456782312"
+        });
+
+        console.log(response.body);
+        expect(response.status).toBe(404);
+        expect(response.body.errors).toBeDefined();
+    });
+
+    it("Should reject login if both username and password invalid", async () => {
+        const response = await supertest(web)
+        .post("/api/users/login")
+        .send({
+            username : "tes12231232t",
+            password : "1234567823123123122"
+        });
+
+        console.log(response.body);
+        expect(response.status).toBe(404);
+        expect(response.body.errors).toBeDefined();
+    });
+
+    it("Should reject login if request invalid", async () => {
+        const response = await supertest(web)
+        .post("/api/users/login")
+        .send({
+            username : "",
+            password : "12"
+        });
+
+        console.log(response.body);
+        expect(response.status).toBe(400);
+        expect(response.body.errors).toBeDefined();
+    });
+});
