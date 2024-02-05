@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignIn() {
     const [request, setRequest] = useState({});
-    // TODO loading states
-    // TODO errors states
+    const[errors, setErrors] = useState("");
+    const[loading, setLoading] = useState(false);
+    const navigate = useNavigate(); // navigate disini untuk menavigasi setelah login akan kemana
 
     const handleChange = () => {
         setRequest({
@@ -14,8 +15,32 @@ export default function SignIn() {
         console.log(request);
     }
 
-    const handleClick = async () => {
-        // TODO login
+    const handleClick = async (event) => {
+        event.preventDefault();
+        try {
+            setLoading(true);
+            const response = await fetch("/api/users/login", {
+                method : "POST",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify(request)
+            });
+            
+            const data = await response.json();
+            if(data.errors) {
+                setErrors(data.errors);
+            }
+            setLoading(false);
+
+            if(!data.errors){
+                navigate("/profile");
+            }
+        } catch (e) {
+            console.log(e);
+        }
+
+        
     }
 
     return (
@@ -24,8 +49,9 @@ export default function SignIn() {
             <form className="flex flex-col gap-4">
                 <input className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} type="text" id="username" name="username" placeholder="Username" />
                 <input className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} type="password" id="password" name="password" placeholder="Password" />
-                <button onClick={handleClick} className="bg-slate-800 p-3 rounded-lg text-white">Sign in</button>
+                <button disabled={loading} onClick={handleClick} className="bg-slate-800 p-3 rounded-lg text-white hover:opacity-95">{loading ? "Loading..." : "Sign in" }</button>
             </form>
+            <p className="text-center text-red-500">{errors ? errors : ""}</p>
             <div className="flex gap-2 mt-5 justify-center">
                 <p>Don&apos;t have account?</p>
                 <Link to="/sign-up">

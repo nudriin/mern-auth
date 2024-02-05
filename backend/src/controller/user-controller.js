@@ -17,9 +17,15 @@ const login = async (req, res, next) => {
     try {
         const request = req.body;
         const result = await userService.userLogin(request);
-        res.status(200).json({
+        const expired = 60 * 60 * 1000;
+
+        // response cookie
+        res.status(200).cookie("access_token", result.token, {
+            maxAge : expired,
+            httpOnly : true
+        }).json({
             data : result
-        })
+        });
     } catch (e) {
         next(e);
     }

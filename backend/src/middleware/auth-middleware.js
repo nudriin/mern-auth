@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { ResponseError } from "../error/response-error";
 
 export const authMiddleware = async (req, res, next) => {
     const { authorization } = req.headers; // destructuring athorizatio from headers

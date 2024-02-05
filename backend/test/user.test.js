@@ -141,8 +141,10 @@ describe("POST /api/users/login", () => {
         });
 
         console.log(response.body);
+        console.log(response.headers["set-cookie"]);
         expect(response.status).toBe(200);
         expect(response.body.data.token).toBeDefined();
+        expect(response.headers["set-cookie"]).toBeDefined();
     });
 
     it("Should reject login if username invalid", async () => {

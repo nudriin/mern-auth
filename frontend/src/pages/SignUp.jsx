@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function SignUp() {
     const [formData, setFormData] = useState({}); // state untuk form data
     const [errors, setErrors] = useState("");
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate(); // navigate disini untuk menavigasi setelah login akan kemana
 
     const handleChange = () => {
         setFormData({
@@ -18,20 +19,28 @@ export default function SignUp() {
     // ! Mengirim data ke backend
     const handleSubmit = async (event) => {
         event.preventDefault(); // disable refresh
-        setLoading(true); // membuat loadingnya jadi true
-        const res = await fetch("/api/users", {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-        });
-        const data = await res.json();
-
-        if (data.errors) {
-            setErrors(data.errors); // set errorsnya dengan data errors
+        try {
+            setLoading(true); // membuat loadingnya jadi true
+            const response = await fetch("/api/users", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await response.json();
+    
+            if (data.errors) {
+                setErrors(data.errors); // set errorsnya dengan data errors
+            }
+            setLoading(false); // ketika selesai loadingnyafalse   
+            
+            if(!data.errors){
+                navigate("/profile");
+            }
+        } catch (e) {
+            console.log(e);
         }
-        setLoading(false); // ketika selesai loadingnyafalse
 
 
     }
