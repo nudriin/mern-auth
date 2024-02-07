@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../components/OAuth.jsx";
 export default function SignUp() {
     const [formData, setFormData] = useState({}); // state untuk form data
     const [errors, setErrors] = useState("");
@@ -29,13 +30,13 @@ export default function SignUp() {
                 body: JSON.stringify(formData)
             });
             const data = await response.json();
-    
+
             if (data.errors) {
                 setErrors(data.errors); // set errorsnya dengan data errors
             }
             setLoading(false); // ketika selesai loadingnyafalse   
-            
-            if(!data.errors){
+
+            if (!data.errors) {
                 navigate("/profile");
             }
         } catch (e) {
@@ -60,6 +61,7 @@ export default function SignUp() {
                     {/* jika tidak di klik maka loading akan false dan jika di klik loading akan true */}
                     {loading ? "Loading..." : "Sign up"}
                 </button>
+                <OAuth />
             </form>
             <p className="text-red-500 text-center mt-4">
                 {errors ? errors : ""}

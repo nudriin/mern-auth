@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInStart, signInSuccess, signInFailed } from "../redux/user/userSlice.js"; // mengimport slice (redux reducer dari slicer)
 import { useDispatch, useSelector } from "react-redux"; // mengimport useDispatch
+import OAuth from "../components/OAuth.jsx";
 
 export default function SignIn() {
     const [request, setRequest] = useState({});
@@ -58,6 +59,7 @@ export default function SignIn() {
                 <input className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} type="text" id="username" name="username" placeholder="Username" />
                 <input className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} type="password" id="password" name="password" placeholder="Password" />
                 <button disabled={loading} onClick={handleClick} className="bg-slate-800 p-3 rounded-lg text-white hover:opacity-95">{loading ? "Loading..." : "Sign in"}</button>
+                <OAuth />
             </form>
             <p className="text-center text-red-500">{errors}</p>
             <div className="flex gap-2 mt-5 justify-center">

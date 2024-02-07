@@ -199,3 +199,44 @@ describe("POST /api/users/login", () => {
         expect(response.body.errors).toBeDefined();
     });
 });
+
+describe("POST /api/users/google", () => {
+    afterEach(async () => {
+        await removeTestUser();
+    });
+
+    it("should be succes register auth via google", async () => {
+        const response = await supertest(web)
+        .post("/api/users/google")
+        .send({
+            username : "test",
+            email : "test@gmail.com",
+            password : "12345678",
+            name : "test",
+            profile_pic : "test"
+        });
+
+        console.log(response.body);
+        
+        expect(response.status).toBe(200);
+        expect(response.body.data.token).toBeDefined();
+    });
+
+    it("should be reject auth via google if request invalid", async () => {
+        const response = await supertest(web)
+        .post("/api/users/google")
+        .send({
+            username : "",
+            email : "testgmail.comssss",
+            password : "1234",
+            name : "",
+            profile_pic : "test"
+        });
+
+        console.log(response.body);
+        
+        expect(response.status).toBe(400);
+        expect(response.body.errors).toBeDefined();
+    });
+
+});

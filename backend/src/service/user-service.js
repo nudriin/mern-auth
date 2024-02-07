@@ -76,11 +76,41 @@ const userLogin = async (request) => {
 
     // return sebagai object token
     return {
-        token : token
+        token: token
+    }
+}
+
+const userGoogleAuth = async (request) => {
+    const validRequest = validate(userRegisterValidation, request);
+    let token = null;
+
+    const user = await prismaClient.user.findFirst({
+        where: {
+            email: validRequest.email
+        },
+        select : {
+            username : true,
+            email : true
+        }
+    });
+
+    if (user) {
+        const token = jwt.sign({
+            username : user.username
+        }, process.env.JWT_SECRET, {
+            expiresIn : 60 * 60
+        });
+        return {
+            token : token
+        };
+    } else {
+        const result = await userRegister(validRequest);
+        return result;
     }
 }
 
 export default {
     userRegister,
-    userLogin
+    userLogin,
+    userGoogleAuth
 }
