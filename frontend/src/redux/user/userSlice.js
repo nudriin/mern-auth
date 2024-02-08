@@ -21,7 +21,7 @@ const userSlice = createSlice({
         //! data(response) yang ada pada sign in akan kita tambahkan ke reducers sebagai action
         signInSuccess: (state, action) => {
             // state.currentUser = action.payload; // * data state token nya akan di simpan di inisialisasikan ke state
-            state.token = action.payload
+            state.token = action?.payload
             state.loading = false;
             state.errors = false;
         },

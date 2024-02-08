@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInStart, signInSuccess, signInFailed } from "../redux/user/userSlice.js"; // mengimport slice (redux reducer dari slicer)
 import { useDispatch, useSelector } from "react-redux"; // mengimport useDispatch
 import OAuth from "../components/OAuth.jsx";
+import swal from "sweetalert2";
 
 export default function SignIn() {
     const [request, setRequest] = useState({});
@@ -36,14 +37,27 @@ export default function SignIn() {
             const data = await response.json();
             if (data.errors) {
                 // kalau gagal data errornya akan di kirim ke reducer
+                swal.fire({
+                    title : "Errors",
+                    text: data.errors,
+                    icon: "error"
+                });
                 dispatch(signInFailed(data.errors));
                 return; // akan di return agar tidak lanjut kebawahnya lagi
                 // // setErrors(data.errors);
             }
+            
             // kalau succes datanya akan di kirim ke reducer
-            dispatch(signInSuccess(data));
-            // // setLoading(false);
-            navigate("/profile"); // jika tidak error akan langsung di alihkan ke halaman /profile
+            if(!data.errors){
+                dispatch(signInSuccess(data));
+                swal.fire({
+                    title : "Success",
+                    text: "Login success!",
+                    icon: "success"
+                });
+                // // setLoading(false);
+                navigate("/profile"); // jika tidak error akan langsung di alihkan ke halaman /profile
+            }
         } catch (e) {
             console.log(e);
             dispatch(signInFailed(e));
@@ -61,7 +75,6 @@ export default function SignIn() {
                 <button disabled={loading} onClick={handleClick} className="bg-slate-900 p-3 rounded-xl text-white hover:opacity-95">{loading ? "Loading..." : "Sign in"}</button>
                 <OAuth />
             </form>
-            <p className="text-center text-red-500">{errors}</p>
             <div className="flex gap-2 mt-5 justify-center">
                 <p>Don&apos;t have account?</p>
                 <Link to="/sign-up">

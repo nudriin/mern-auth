@@ -5,7 +5,7 @@ export default function Header() {
     // Mengambil data state token dari slicer user
     const { token } = useSelector((state) => state.user);
     return (
-        <div className="bg-slate-900 text-white fixed top-0 left-0 right-0 font-futura">
+        <div className="bg-slate-900 text-white fixed top-0 left-0 right-0 font-poppins">
             <div className="flex justify-between items-center mx-auto max-w-6xl p-4">
                 <Link to="/">
                     <h1 className="font-bold text-xl text-blue">nAI</h1>

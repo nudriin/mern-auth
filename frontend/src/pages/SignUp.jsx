@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth.jsx";
+import swal from "sweetalert2";
 export default function SignUp() {
     const [formData, setFormData] = useState({}); // state untuk form data
     const [errors, setErrors] = useState("");
@@ -32,11 +33,21 @@ export default function SignUp() {
             const data = await response.json();
 
             if (data.errors) {
+                swal.fire({
+                    title : "Errors",
+                    text: data.errors,
+                    icon: "error"
+                });
                 setErrors(data.errors); // set errorsnya dengan data errors
             }
             setLoading(false); // ketika selesai loadingnyafalse   
-
+            
             if (!data.errors) {
+                swal.fire({
+                    title : "Success",
+                    text: "Sign up success",
+                    icon: "success"
+                });
                 navigate("/profile");
             }
         } catch (e) {
@@ -64,7 +75,7 @@ export default function SignUp() {
                 <OAuth />
             </form>
             <p className="text-red-500 text-center mt-4">
-                {errors ? errors : ""}
+                {/* {errors ? errors : ""} */}
             </p>
             <div className="flex gap-2 mt-5 justify-center" id="foot">
                 <p>Have an account?</p>
