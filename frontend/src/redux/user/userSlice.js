@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit"; // import create Slice untuk membuat slice
-
 // Menginisiasikan statenya
 const initialState = {
     token : null,
@@ -21,9 +20,10 @@ const userSlice = createSlice({
 
         //! data(response) yang ada pada sign in akan kita tambahkan ke reducers sebagai action
         signInSuccess: (state, action) => {
-            state.token = action.payload, // * data state token nya akan di simpan di inisialisasikan ke state
-            state.loading = false,
-            state.errors = false
+            // state.currentUser = action.payload; // * data state token nya akan di simpan di inisialisasikan ke state
+            state.token = action.payload
+            state.loading = false;
+            state.errors = false;
         },
         signInFailed: (state, action) => {
             state.loading = false,

@@ -7,7 +7,6 @@ const register = async (req, res, next) => {
         res.status(200).json({
             data : result
         });
-        res.cookies
     } catch (e) {
         next(e)
     }
@@ -17,15 +16,16 @@ const login = async (req, res, next) => {
     try {
         const request = req.body;
         const result = await userService.userLogin(request);
-        const expired = 60 * 60 * 1000;
-
+        
         // response cookie
-        res.status(200).cookie("access_token", result.token, {
-            maxAge : expired,
-            httpOnly : true
-        }).json({
+        res.status(200).json({
             data : result
         });
+        // const expired = 60 * 60 * 1000;
+        // cookie("access_token", result.token, {
+        //     maxAge : expired,
+        //     httpOnly : true
+        // }).
     } catch (e) {
         next(e);
     }
@@ -39,21 +39,36 @@ const googleAuth = async (req, res, next) => {
         // register via google
         const result = await userService.userGoogleAuth(request);
         
-        const expired = 60 * 60 * 1000;
-        res.status(200).cookie("access_token", result.token, {
-            maxAge : expired,
-            httpOnly : true
-        }).json({
+        res.status(200).json({
             data : result
         });
+        // const expired = 60 * 60 * 1000;
+        // .cookie("access_token", result.token, {
+        //     maxAge : expired,
+        //     httpOnly : true
+        // })
 
     } catch (e) {
         next(e)
     }
 }
 
+const get = async(req, res, next) => {
+    try {
+        const username = req.user.username;
+
+        const result = await userService.userGet(username);
+        res.status(200).json({
+            data : result
+        });
+    } catch (e) {
+        next(e);
+    }
+}
+
 export default {
     register,
     login,
-    googleAuth
+    googleAuth,
+    get
 }

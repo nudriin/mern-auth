@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { prismaClient } from "../app/database.js";
 
 export const authMiddleware = async (req, res, next) => {
     const { authorization } = req.headers; // destructuring athorizatio from headers
@@ -7,16 +8,33 @@ export const authMiddleware = async (req, res, next) => {
             errors: "Unauthorized"
         }).end();
     } else {
-        const token = authorization.split(" ")[1]; // mengambil data token dari bearer token
         try {
+            const token = authorization.split(" ")[1]; // mengambil data token dari bearer token
             const payload = jwt.verify(token, process.env.JWT_SECRET); // decode token
-            req.user = payload; // buat data req.user dari payload tokennya
+            const user = await prismaClient.user.findUnique({
+                where : {
+                    username : payload.username
+                },
+                select : {
+                    username : true,
+                    email : true,
+                    name : true,
+                    profile_pic : true
+                }
+            });
+            if(!user){
+                res.status(401).json({
+                    errors: "Unauthorized"
+                }).end();
+            } else {
+                req.user = user; // buat data req.user
+                next();
+            }
         } catch (e) {
             res.status(401).json({
                 errors: "Unauthorized"
             }).end();
         }
-        next();
     }
 
 }

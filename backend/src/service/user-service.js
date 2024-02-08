@@ -1,6 +1,6 @@
 import { prismaClient } from "../app/database.js";
 import { ResponseError } from "../error/response-error.js";
-import { userLoginValidation, userRegisterValidation } from "../validation/user-validation.js";
+import { userGetValidation, userLoginValidation, userRegisterValidation } from "../validation/user-validation.js";
 import { validate } from "../validation/validate.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -53,7 +53,9 @@ const userLogin = async (request) => {
         select: {
             username: true,
             email: true,
-            password: true
+            name: true,
+            password: true,
+            profile_pic: true
         }
     });
 
@@ -76,41 +78,81 @@ const userLogin = async (request) => {
 
     // return sebagai object token
     return {
+        username: user.user,
+        email: user.email,
+        name: user.name,
+        profile_pic: user.profile_pic,
         token: token
     }
 }
 
 const userGoogleAuth = async (request) => {
     const validRequest = validate(userRegisterValidation, request);
-    let token = null;
 
-    const user = await prismaClient.user.findFirst({
+    const user = await prismaClient.user.findUnique({
         where: {
             email: validRequest.email
         },
-        select : {
-            username : true,
-            email : true
+        select: {
+            username: true,
+            email: true,
+            name: true,
+            profile_pic: true
         }
     });
 
     if (user) {
         const token = jwt.sign({
-            username : user.username
+            username: user.username
         }, process.env.JWT_SECRET, {
-            expiresIn : 60 * 60
+            expiresIn: 60 * 60
         });
         return {
-            token : token
+            username: user.user,
+            email: user.email,
+            name: user.name,
+            profile_pic: user.profile_pic,
+            token: token
         };
     } else {
         const result = await userRegister(validRequest);
-        return result;
+        const token = jwt.sign({
+            username: result.username
+        }, process.env.JWT_SECRET, {
+            expiresIn: 60 * 60
+        });
+        return {
+            token: token
+        };
+        // return result;
     }
+}
+
+const userGet = async (username) => {
+    const usernameValid = validate(userGetValidation, username);
+
+    const user = await prismaClient.user.findUnique({
+        where: {
+            username: usernameValid
+        },
+        select: {
+            username: true,
+            email: true,
+            name: true,
+            profile_pic: true
+        }
+    });
+
+    if (!user) {
+        throw new ResponseError(404, "User not found");
+    }
+
+    return user;
 }
 
 export default {
     userRegister,
     userLogin,
-    userGoogleAuth
+    userGoogleAuth,
+    userGet
 }

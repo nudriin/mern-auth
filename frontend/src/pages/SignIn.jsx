@@ -7,7 +7,7 @@ import OAuth from "../components/OAuth.jsx";
 export default function SignIn() {
     const [request, setRequest] = useState({});
     // mengambil data statenya dari reducer, "user" disini diambil dari reducer yang ada di store
-    const { loading, errors } = useSelector((state) => state.user);
+    const { loading, errors} = useSelector((state) => state.user);
     const navigate = useNavigate(); // navigate disini untuk menavigasi setelah login akan kemana
     const dispatch = useDispatch(); // 
 
@@ -40,7 +40,7 @@ export default function SignIn() {
                 return; // akan di return agar tidak lanjut kebawahnya lagi
                 // // setErrors(data.errors);
             }
-            // kalaun succes datanya akan di kirim ke reducer
+            // kalau succes datanya akan di kirim ke reducer
             dispatch(signInSuccess(data));
             // // setLoading(false);
             navigate("/profile"); // jika tidak error akan langsung di alihkan ke halaman /profile

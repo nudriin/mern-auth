@@ -17,3 +17,5 @@ export const userLoginValidation = Joi.object({
     password : Joi.string().max(100).min(8).required()
 });
 
+export const userGetValidation = Joi.string().max(100).required();
+

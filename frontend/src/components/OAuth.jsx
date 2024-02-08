@@ -3,7 +3,6 @@ import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import { signInStart, signInSuccess, signInFailed } from "../redux/user/userSlice.js"; 
 import { useNavigate } from"react-router-dom";
 import { app } from "../firebase.js";
-
 export default function OAuth() {
 
 
@@ -36,7 +35,8 @@ export default function OAuth() {
                 )
             });
         
-            const data = response.json();
+            const data = await response.json();
+            console.log(data);
             dispatch(signInSuccess(data));
             navigate("/profile");
         } catch (e) {
