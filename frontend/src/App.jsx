@@ -11,7 +11,7 @@ export default function App() {
   // ! Membuat routing file pada react component
   return (
     <BrowserRouter>
-      {/* Membuat Header, header ini akan berada pada semua routesnya apapun pagenya tetap aan ada */}
+      {/* Membuat Header, header ini akan berada pada semua routesnya apapun pagenya tetap akan ada */}
       <Header />
 
       {/*  Membuat Routes */}

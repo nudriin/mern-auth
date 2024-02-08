@@ -5,17 +5,17 @@ export default function Header() {
     // Mengambil data state token dari slicer user
     const { token } = useSelector((state) => state.user);
     return (
-        <div className="bg-slate-200">
-            <div className="flex justify-between items-center mx-auto max-w-6xl p-3">
+        <div className="bg-slate-900 text-white fixed top-0 left-0 right-0 font-futura">
+            <div className="flex justify-between items-center mx-auto max-w-6xl p-4">
                 <Link to="/">
-                    <h1 className="font-bold">PDFParser</h1>
+                    <h1 className="font-bold text-xl text-blue">nAI</h1>
                 </Link>
                 <ul className="flex gap-4">
                     <Link to="/">
-                        <li>Home</li>
+                        <li className="hover:bg-purple hover:white hover:rounded-full py-1 px-4">Home</li>
                     </Link>
                     <Link to="/about">
-                        <li>About</li>
+                        <li className="hover:bg-purple hover:white hover:rounded-full py-1 px-4">About</li>
                     </Link>
                     {token ? (
                         <Link to="/profile">
@@ -23,7 +23,7 @@ export default function Header() {
                         </Link>
                     ) : (
                         <Link to="/sign-in">
-                            <li>Sign-in</li>
+                            <li className="hover:bg-purple hover:white  hover:rounded-full py-1 px-4">Sign-in</li>
                         </Link>
                     )}
                 </ul>

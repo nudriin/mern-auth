@@ -46,7 +46,7 @@ export default function OAuth() {
     }
 
     return (
-        <button type="button" disabled={loading} onClick={handleClick} className="bg-blue-600 text-white p-3 rounded-lg hover:opacity-95">
+        <button type="button" disabled={loading} onClick={handleClick} className="bg-purple text-white p-3 rounded-xl hover:opacity-95">
             Continue with Google
         </button>
     )

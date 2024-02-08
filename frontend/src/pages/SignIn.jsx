@@ -53,12 +53,12 @@ export default function SignIn() {
     }
 
     return (
-        <div className="max-w-lg mx-auto">
-            <h1 className="text-3xl text-center font-bold my-6">Sign In</h1>
+        <div className="max-w-lg mx-auto mt-28">
+            <h1 className="text-3xl text-center font-bold my-16 font-rubik">Sign In</h1>
             <form className="flex flex-col gap-4">
-                <input className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} type="text" id="username" name="username" placeholder="Username" />
-                <input className="bg-slate-100 p-3 rounded-lg" onChange={handleChange} type="password" id="password" name="password" placeholder="Password" />
-                <button disabled={loading} onClick={handleClick} className="bg-slate-800 p-3 rounded-lg text-white hover:opacity-95">{loading ? "Loading..." : "Sign in"}</button>
+                <input className="bg-slate-100 p-3 rounded-xl" onChange={handleChange} type="text" id="username" name="username" placeholder="Username" />
+                <input className="bg-slate-100 p-3 rounded-xl" onChange={handleChange} type="password" id="password" name="password" placeholder="Password" />
+                <button disabled={loading} onClick={handleClick} className="bg-slate-900 p-3 rounded-xl text-white hover:opacity-95">{loading ? "Loading..." : "Sign in"}</button>
                 <OAuth />
             </form>
             <p className="text-center text-red-500">{errors}</p>
