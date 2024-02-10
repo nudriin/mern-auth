@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInStart, signInSuccess, signInFailed } from "../redux/user/userSlice.js"; // mengimport slice (redux reducer dari slicer)
@@ -46,7 +47,7 @@ export default function SignIn() {
                 return; // akan di return agar tidak lanjut kebawahnya lagi
                 // // setErrors(data.errors);
             }
-            
+
             // kalau succes datanya akan di kirim ke reducer
             if(!data.errors){
                 dispatch(signInSuccess(data));
@@ -67,18 +68,18 @@ export default function SignIn() {
     }
 
     return (
-        <div className="max-w-lg mx-auto mt-28">
-            <h1 className="text-3xl text-center font-bold my-16 font-rubik">Sign In</h1>
+        <div className="px-4 max-w-lg mx-auto mt-28">
+            <h1 className="text-3xl text-center font-bold my-16 font-rubik">Masuk</h1>
             <form className="flex flex-col gap-4">
                 <input className="bg-slate-100 p-3 rounded-xl" onChange={handleChange} type="text" id="username" name="username" placeholder="Username" />
                 <input className="bg-slate-100 p-3 rounded-xl" onChange={handleChange} type="password" id="password" name="password" placeholder="Password" />
-                <button disabled={loading} onClick={handleClick} className="bg-slate-900 p-3 rounded-xl text-white hover:opacity-95">{loading ? "Loading..." : "Sign in"}</button>
+                <button disabled={loading} onClick={handleClick} className="bg-slate-900 p-3 rounded-xl text-white hover:opacity-95">{loading ? "Loading..." : "Masuk"}</button>
                 <OAuth />
             </form>
             <div className="flex gap-2 mt-5 justify-center">
-                <p>Don&apos;t have account?</p>
+                <p>Belum punya akun?</p>
                 <Link to="/sign-up">
-                    <span className="text-blue-500">Sign up</span>
+                    <span className="text-blue-500">Daftar</span>
                 </Link>
             </div>
         </div>

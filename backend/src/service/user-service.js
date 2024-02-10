@@ -36,7 +36,8 @@ const userRegister = async (request) => {
         select: {
             username: true,
             email: true,
-            name: true
+            name: true,
+            profile_pic : true
         }
     });
 
@@ -78,7 +79,7 @@ const userLogin = async (request) => {
 
     // return sebagai object token
     return {
-        username: user.user,
+        username: user.username,
         email: user.email,
         name: user.name,
         profile_pic: user.profile_pic,
@@ -108,7 +109,7 @@ const userGoogleAuth = async (request) => {
             expiresIn: 60 * 60
         });
         return {
-            username: user.user,
+            username: user.username,
             email: user.email,
             name: user.name,
             profile_pic: user.profile_pic,
@@ -122,6 +123,10 @@ const userGoogleAuth = async (request) => {
             expiresIn: 60 * 60
         });
         return {
+            username: result.username,
+            email: result.email,
+            name: result.name,
+            profile_pic: result.profile_pic,
             token: token
         };
         // return result;

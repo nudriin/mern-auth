@@ -34,17 +34,17 @@ export default function SignUp() {
 
             if (data.errors) {
                 swal.fire({
-                    title : "Errors",
+                    title: "Errors",
                     text: data.errors,
                     icon: "error"
                 });
                 setErrors(data.errors); // set errorsnya dengan data errors
             }
             setLoading(false); // ketika selesai loadingnyafalse   
-            
+
             if (!data.errors) {
                 swal.fire({
-                    title : "Success",
+                    title: "Success",
                     text: "Sign up success",
                     icon: "success"
                 });
@@ -59,8 +59,8 @@ export default function SignUp() {
 
     console.log(formData);
     return (
-        <div className="max-w-lg mx-auto mb-10 mt-28">
-            <h1 className="text-3xl text-center font-bold my-16 font-rubik">Sign Up</h1>
+        <div className="px-4 max-w-lg mx-auto mb-10 mt-28">
+            <h1 className="text-3xl text-center font-bold my-16 font-rubik">Daftar</h1>
             {/* Ketika di submit akan menjalan function  */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 justify-center">
                 <input type="text" name="username" id="username" placeholder="Username" className="bg-slate-100 p-3 rounded-xl" onChange={handleChange} />
@@ -70,7 +70,7 @@ export default function SignUp() {
                 {/* jika loading true maka akan di disabled */}
                 <button disabled={loading} className="bg-slate-800 text-white p-3 rounded-xl hover:opacity-95">
                     {/* jika tidak di klik maka loading akan false dan jika di klik loading akan true */}
-                    {loading ? "Loading..." : "Sign up"}
+                    {loading ? "Loading..." : "Daftar"}
                 </button>
                 <OAuth />
             </form>
@@ -78,9 +78,9 @@ export default function SignUp() {
                 {/* {errors ? errors : ""} */}
             </p>
             <div className="flex gap-2 mt-5 justify-center" id="foot">
-                <p>Have an account?</p>
+                <p>Sudah punya akun?</p>
                 <Link to="/sign-in">
-                    <span className="text-blue-500">Sign in</span>
+                    <span className="text-blue-500">Masuk</span>
                 </Link>
             </div>
         </div>

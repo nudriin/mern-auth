@@ -6,7 +6,7 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAMLiJO2sRJc51pWDasEKna7lktpgSObUU", // import dari dotenv
+    apiKey: `${import.meta.env.FIREBASE_API_KEY}`, // import dari dotenv
     authDomain: "mern-auth-5a53c.firebaseapp.com",
     projectId: "mern-auth-5a53c",
     storageBucket: "mern-auth-5a53c.appspot.com",
