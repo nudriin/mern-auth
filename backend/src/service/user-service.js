@@ -79,10 +79,10 @@ const userLogin = async (request) => {
 
     // return sebagai object token
     return {
-        username: user.username,
-        email: user.email,
-        name: user.name,
-        profile_pic: user.profile_pic,
+        // username: user.username,
+        // email: user.email,
+        // name: user.name,
+        // profile_pic: user.profile_pic,
         token: token
     }
 }
@@ -109,10 +109,10 @@ const userGoogleAuth = async (request) => {
             expiresIn: 60 * 60
         });
         return {
-            username: user.username,
-            email: user.email,
-            name: user.name,
-            profile_pic: user.profile_pic,
+            // username: user.username,
+            // email: user.email,
+            // name: user.name,
+            // profile_pic: user.profile_pic,
             token: token
         };
     } else {
@@ -123,10 +123,10 @@ const userGoogleAuth = async (request) => {
             expiresIn: 60 * 60
         });
         return {
-            username: result.username,
-            email: result.email,
-            name: result.name,
-            profile_pic: result.profile_pic,
+            // username: result.username,
+            // email: result.email,
+            // name: result.name,
+            // profile_pic: result.profile_pic,
             token: token
         };
         // return result;

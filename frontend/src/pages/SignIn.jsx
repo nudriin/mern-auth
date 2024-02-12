@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signInStart, signInSuccess, signInFailed } from "../redux/user/userSlice.js"; // mengimport slice (redux reducer dari slicer)
+import { signInStart, signInSuccess, getUserSuccess, signInFailed } from "../redux/user/userSlice.js"; // mengimport slice (redux reducer dari slicer)
 import { useDispatch, useSelector } from "react-redux"; // mengimport useDispatch
 import OAuth from "../components/OAuth.jsx";
 import swal from "sweetalert2";
@@ -51,6 +51,18 @@ export default function SignIn() {
             // kalau succes datanya akan di kirim ke reducer
             if(!data.errors){
                 dispatch(signInSuccess(data));
+                if(!loading) {
+                    const response = await fetch("/api/users/current", {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization" : `Bearer ${data?.data?.token}`
+                        }
+                    });
+                    const user = await response.json();
+                    console.log(user)
+                    dispatch(getUserSuccess(user));
+                }
                 swal.fire({
                     title : "Success",
                     text: "Login success!",

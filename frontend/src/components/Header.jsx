@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 export default function Header() {
     // Mengambil data state token dari slicer user
-    const { token } = useSelector((state) => state.user);
+    const { curUser } = useSelector((state) => state.user);
     return (
         <div className="bg-slate-900 z-50 text-white fixed top-0 left-0 right-0 font-poppins">
             <div className="flex justify-center sm:justify-between items-center mx-auto max-w-6xl p-4">
@@ -17,9 +17,9 @@ export default function Header() {
                     <Link to="/about">
                         <li className="hover:bg-purple hover:white hover:rounded-full py-1 px-4">Tentang</li>
                     </Link>
-                    {token ? (
+                    {curUser ? (
                         <Link to="/profile">
-                            <img src={token?.data?.profile_pic} className="h-7 w-7 rounded-full object-cover object-center" />
+                            <img src={curUser?.data?.profile_pic} className="h-7 w-7 rounded-full object-cover object-center" />
                         </Link>
                     ) : (
                         <Link to="/sign-in">

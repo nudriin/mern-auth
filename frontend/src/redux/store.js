@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
 });
 
 const persistConfig = {
-    key: 'token',
+    key: 'login',
     version: 1,
     storage
 }

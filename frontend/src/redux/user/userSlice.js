@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit"; // import create Slice untuk membu
 // Menginisiasikan statenya
 const initialState = {
     token : null,
+    curUser : null,
     loading : false,
     errors : false
 }
@@ -20,11 +21,16 @@ const userSlice = createSlice({
 
         //! data(response) yang ada pada sign in akan kita tambahkan ke reducers sebagai action
         signInSuccess: (state, action) => {
-            // state.currentUser = action.payload; // * data state token nya akan di simpan di inisialisasikan ke state
             state.token = action?.payload
             state.loading = false;
             state.errors = false;
         },
+
+        getUserSuccess: (state, action) => {
+            // * data state token nya akan di simpan di inisialisasikan ke state
+            state.curUser = action?.payload
+        },
+
         signInFailed: (state, action) => {
             state.loading = false,
             state.errors = action?.payload // errorny akan diambil dari data responsenya
@@ -33,7 +39,7 @@ const userSlice = createSlice({
 });
 
 // destructuring dan export datanya dari slicer actions
-export const {signInStart, signInSuccess, signInFailed} = userSlice.actions;
+export const {signInStart, signInSuccess, signInFailed, getUserSuccess } = userSlice.actions;
 
 //! ini akan kita tambah ke reducer yang ada di store
 // ibaratnya userSlice ini adalah komponen yang akan di tambah ke main file yang ada di store 
