@@ -57,7 +57,7 @@ export default function Profile() {
                 request.resource.contentType.matches('image/.*') */}
                 <input type="file" ref={fileRef} hidden accept="image/*" onChange={(event) => setImage(event.target.files[0])} />
                 {/* Jika img di klik maka akan tampil pilihan file */}
-                <img src={curUser?.data?.profile_pic} onClick={() => fileRef.current.click()} className="w-64 h-64 self-center rounded-full cursor-pointer object-cover object-center" />
+                <img src={formData.profile_pic ? formData.profile_pic : curUser?.data?.profile_pic} onClick={() => fileRef.current.click()} className="w-40 h-40 self-center rounded-full cursor-pointer object-cover object-center" />
                 <p className="text-center text-sm">
                     {imageError ? (
                         <span className="text-red-500">Gagal mengunggah foto (File maksimal berukuran 2MB)</span>

@@ -66,9 +66,24 @@ const get = async(req, res, next) => {
     }
 }
 
+
+const update = async(req, res, next) => {
+    try{
+        const request = req.body;
+
+        const result = await userService.userUpdate(request);
+        res.status(200).json({
+            data : result
+        });
+    } catch(e) {
+        next(e);
+    }
+}
+
 export default {
     register,
     login,
     googleAuth,
-    get
+    get,
+    update
 }

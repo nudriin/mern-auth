@@ -12,10 +12,10 @@ export default function Header() {
                 </Link>
                 <ul className="flex gap-4">
                     <Link to="/">
-                        <li className="hover:bg-purple hover:white hover:rounded-full py-1 px-4">Beranda</li>
+                        <li className="hover:bg-pink hover:white hover:rounded-full py-1 px-4">Beranda</li>
                     </Link>
                     <Link to="/about">
-                        <li className="hover:bg-purple hover:white hover:rounded-full py-1 px-4">Tentang</li>
+                        <li className="hover:bg-pink hover:white hover:rounded-full py-1 px-4">Tentang</li>
                     </Link>
                     {curUser ? (
                         <Link to="/profile">

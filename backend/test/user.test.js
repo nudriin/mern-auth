@@ -300,3 +300,251 @@ describe("GET /api/users/current", () => {
 
     });
 });
+
+describe("PATCH /api/users/current", () => {
+    beforeEach(async () => {
+        await createTestUser();
+    });
+
+    afterEach(async () => {
+        await removeTestUser();
+    });
+
+    it("Should success update name users", async () => {
+
+        // Login first
+        let response = await supertest(web)
+            .post("/api/users/login")
+            .send({
+                username: "test",
+                password: "12345678"
+            });
+        const token = response.body.data.token;
+
+        // get user data
+        response = await supertest(web)
+            .patch("/api/users/current/")
+            .set({
+                "Authorization": `Bearer ${token}`
+            })
+            .send({
+                username : "test",
+                name : "updated"
+            });
+
+        console.log(response.body);
+        expect(response.status).toBe(200);
+        expect(response.body.data.username).toBe("test");
+        expect(response.body.data.email).toBe("test@gmail.com");
+        expect(response.body.data.name).toBe("updated");
+    });
+
+    it("Should success update password users", async () => {
+
+        // Login first
+        let response = await supertest(web)
+            .post("/api/users/login")
+            .send({
+                username: "test",
+                password: "12345678"
+            });
+        const token = response.body.data.token;
+
+        // get user data
+        response = await supertest(web)
+            .patch("/api/users/current/")
+            .set({
+                "Authorization": `Bearer ${token}`
+            })
+            .send({
+                username : "test",
+                password : "updated12345",
+                old_password : "12345678"
+            });
+
+        console.log(response.body);
+        expect(response.status).toBe(200);
+        expect(response.body.data.username).toBe("test");
+        expect(response.body.data.email).toBe("test@gmail.com");
+        expect(response.body.data.name).toBe("test");
+        
+        response = await supertest(web)
+        .post("/api/users/login")
+        .send({
+            username: "test",
+            password: "updated12345"
+        });
+
+        expect(response.status).toBe(200);
+        expect(response.body.data.token).toBeDefined();
+    });
+
+    it("Should success update profile_pic users", async () => {
+
+        // Login first
+        let response = await supertest(web)
+            .post("/api/users/login")
+            .send({
+                username: "test",
+                password: "12345678"
+            });
+        const token = response.body.data.token;
+
+        // get user data
+        response = await supertest(web)
+            .patch("/api/users/current/")
+            .set({
+                "Authorization": `Bearer ${token}`
+            })
+            .send({
+                username : "test",
+                profile_pic : "updated"
+            });
+
+        console.log(response.body);
+        expect(response.status).toBe(200);
+        expect(response.body.data.username).toBe("test");
+        expect(response.body.data.email).toBe("test@gmail.com");
+        expect(response.body.data.name).toBe("test");
+        expect(response.body.data.profile_pic).toBe("updated");
+    });
+
+    it("Should success update all data users", async () => {
+
+        // Login first
+        let response = await supertest(web)
+            .post("/api/users/login")
+            .send({
+                username: "test",
+                password: "12345678"
+            });
+        const token = response.body.data.token;
+
+        // get user data
+        response = await supertest(web)
+            .patch("/api/users/current/")
+            .set({
+                "Authorization": `Bearer ${token}`
+            })
+            .send({
+                username : "test",
+                name : "updated",
+                password : "updated12345",
+                old_password : "12345678",
+                profile_pic : "updated"
+            });
+
+        console.log(response.body);
+        expect(response.status).toBe(200);
+        expect(response.body.data.username).toBe("test");
+        expect(response.body.data.email).toBe("test@gmail.com");
+        expect(response.body.data.name).toBe("updated");
+        expect(response.body.data.profile_pic).toBe("updated");
+
+        response = await supertest(web)
+        .post("/api/users/login")
+        .send({
+            username: "test",
+            password: "updated12345"
+        });
+
+        expect(response.status).toBe(200);
+        expect(response.body.data.token).toBeDefined();
+    });
+
+    it("Should reject update if old password users invalid", async () => {
+
+        // Login first
+        let response = await supertest(web)
+            .post("/api/users/login")
+            .send({
+                username: "test",
+                password: "12345678"
+            });
+        const token = response.body.data.token;
+
+        // get user data
+        response = await supertest(web)
+            .patch("/api/users/current/")
+            .set({
+                "Authorization": `Bearer ${token}`
+            })
+            .send({
+                username : "test",
+                password : "updated12345",
+                old_password : "salah1231232312"
+            });
+
+        console.log(response.body);
+        expect(response.status).toBe(401);
+        expect(response.body.errors).toBeDefined();
+        
+        response = await supertest(web)
+        .post("/api/users/login")
+        .send({
+            username: "test",
+            password: "updated12345"
+        });
+
+        expect(response.status).toBe(404);
+        expect(response.body.errors).toBeDefined();
+    });
+
+    it("Should reject update if no authorization users invalid", async () => {
+
+        // Login first
+        let response = await supertest(web)
+            .post("/api/users/login")
+            .send({
+                username: "test",
+                password: "12345678"
+            });
+        const token = response.body.data.token;
+
+        // get user data
+        response = await supertest(web)
+            .patch("/api/users/current/")
+            .set({
+                "Authorization": `Bearer ${token}123213123`
+            })
+            .send({
+                username : "test",
+                password : "updated12345",
+                old_password : "salah1231232312"
+            });
+
+        console.log(response.body);
+        expect(response.status).toBe(401);
+        expect(response.body.errors).toBeDefined();
+    });
+
+    it("Should reject update if request users invalid", async () => {
+
+        // Login first
+        let response = await supertest(web)
+            .post("/api/users/login")
+            .send({
+                username: "test",
+                password: "12345678"
+            });
+        const token = response.body.data.token;
+
+        // get user data
+        response = await supertest(web)
+            .patch("/api/users/current/")
+            .set({
+                "Authorization": `Bearer ${token}`
+            })
+            .send({
+                username : "test",
+                name : "",
+                profile_pic : "",
+                password : "updated12345",
+                // old_password : "salah1231232312"
+            });
+
+        console.log(response.body);
+        expect(response.status).toBe(400);
+        expect(response.body.errors).toBeDefined();
+    });
+});

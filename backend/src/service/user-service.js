@@ -1,6 +1,6 @@
 import { prismaClient } from "../app/database.js";
 import { ResponseError } from "../error/response-error.js";
-import { userGetValidation, userLoginValidation, userRegisterValidation } from "../validation/user-validation.js";
+import { userGetValidation, userLoginValidation, userRegisterValidation, userUpdateValidation } from "../validation/user-validation.js";
 import { validate } from "../validation/validate.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -155,9 +155,56 @@ const userGet = async (username) => {
     return user;
 }
 
+const userUpdate = async (request) => {
+    const validRequest = validate(userUpdateValidation, request);
+
+    const user = await prismaClient.user.findUnique({
+        where : {
+            username : validRequest.username
+        }
+    });
+
+    if(!user) {
+        throw new ResponseError(404, "User not found");
+    }
+    const data = {}
+
+    if(validRequest.name){
+        data.name = validRequest.name;
+    }
+
+    if(validRequest.profile_pic){
+        data.profile_pic = validRequest.profile_pic;
+    }
+    
+    if(validRequest.old_password && validRequest.password){
+        const validOldPassword = await bcrypt.compare(validRequest.old_password, user.password);
+        if(!validOldPassword){
+            throw new ResponseError(401, 'Invalid old password');
+        }
+        data.password = await bcrypt.hash(validRequest.password, 10)
+    }
+
+    const result = await prismaClient.user.update({
+        where : {
+            username : validRequest.username
+        },
+        data : data,
+        select : {
+            username : true,
+            email : true,
+            name : true,
+            profile_pic : true
+        }
+    });
+
+    return result;
+}
+
 export default {
     userRegister,
     userLogin,
     userGoogleAuth,
-    userGet
+    userGet,
+    userUpdate
 }
