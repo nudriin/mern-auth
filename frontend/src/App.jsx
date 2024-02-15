@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import SignRoute from "./components/SignRoute";
+import Footer from "./components/Footer";
 export default function App() {
   // ! Membuat routing file pada react component
   return (
@@ -27,6 +28,8 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
+
+      <Footer />
 
     </BrowserRouter>
   )

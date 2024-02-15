@@ -18,7 +18,7 @@ export default {
         'dark-white' : '#F3F8FF',
         'pink' : '#E26EE5',
         'purple' : '#7E30E1',
-        'dark-urple' : '#49108B'
+        'dark-purple' : '#49108B'
       },
       backgroundImage : {
         'hero-bg' : "url('./src/assets/images/Deco.png')"

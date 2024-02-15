@@ -10,9 +10,6 @@ export default function Profile() {
     const [imageError, setImageError] = useState(false); // membuat state untuk progress images 
     const [imageSuccess, setImageSuccess] = useState(false); // membuat state untuk progress images 
     const [formData, setFormData] = useState({});
-    console.log(formData)
-
-    console.log(image);
     useEffect(() => {
         if (image) {
             handleUpload(image);
@@ -22,7 +19,7 @@ export default function Profile() {
     const handleUpload = async (image) => {
         const storage = getStorage(app); // * membuat storagenya
         const fileName = new Date().getTime() + image.name; // * membuat nama filenya
-        const storageRef = ref(storage, fileName); // * membuat referensi nama dan storagenya
+        const storageRef = ref(storage, `profiles/${fileName}`); // * membuat referensi nama dan storagenya dan memasukan ke folder profiles
         const uploadTask = uploadBytesResumable(storageRef, image); // * upload data imagesnya ke referensi storage dengan nama berdasarkan fileName
         // 
         uploadTask.on("state_changed", (snapshot) => {
@@ -37,6 +34,7 @@ export default function Profile() {
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
                     setFormData({ ...formData, profile_pic: downloadUrl });
+                    console.log(downloadUrl);
                 });
                 setImageError(false);
                 setImageSuccess(true);
@@ -46,8 +44,8 @@ export default function Profile() {
     }
 
     return (
-        <div className="p-3 max-w-lg mx-auto">
-            <h1 className="font-rubik font-bold text-3xl text-center mt-28">Profile</h1>
+        <div className="max-w-lg p-3 mx-auto">
+            <h1 className="text-3xl font-bold text-center font-rubik mt-28">Profile</h1>
             <form className="flex flex-col gap-4 mb-[1rem]">
                 {/*
                 FIREBASE RULES
@@ -57,8 +55,8 @@ export default function Profile() {
                 request.resource.contentType.matches('image/.*') */}
                 <input type="file" ref={fileRef} hidden accept="image/*" onChange={(event) => setImage(event.target.files[0])} />
                 {/* Jika img di klik maka akan tampil pilihan file */}
-                <img src={formData.profile_pic ? formData.profile_pic : curUser?.data?.profile_pic} onClick={() => fileRef.current.click()} className="w-40 h-40 self-center rounded-full cursor-pointer object-cover object-center" />
-                <p className="text-center text-sm">
+                <img src={formData.profile_pic ? formData.profile_pic : curUser?.data?.profile_pic} onClick={() => fileRef.current.click()} className="self-center object-cover object-center w-40 h-40 rounded-full cursor-pointer" />
+                <p className="text-sm text-center">
                     {imageError ? (
                         <span className="text-red-500">Gagal mengunggah foto (File maksimal berukuran 2MB)</span>
                     ) : imageProgress > 0 && imageProgress < 100 ? (
@@ -69,15 +67,15 @@ export default function Profile() {
                         ''
                     )}
                 </p>
-                <input defaultValue={curUser?.data?.username} type="text" placeholder="Username" disabled={true} className="bg-slate-300 rounded-xl p-3" />
-                <input defaultValue={curUser?.data?.email} type="text" placeholder="Email" disabled={true} className="bg-slate-300 rounded-xl p-3" />
-                <input defaultValue={curUser?.data?.name} type="text" placeholder="Name" className="bg-slate-200 rounded-xl p-3" />
-                <input type="text" placeholder="Old password" className="bg-slate-200 rounded-xl p-3" />
-                <input type="text" placeholder="New password" className="bg-slate-200 rounded-xl p-3" />
-                <button className="bg-gradient-to-b from-pink to-purple text-white p-3 rounded-xl hover:opacity-95">Simpan</button>
+                <input defaultValue={curUser?.data?.username} type="text" placeholder="Username" disabled={true} className="p-3 bg-slate-300 rounded-xl" />
+                <input defaultValue={curUser?.data?.email} type="text" placeholder="Email" disabled={true} className="p-3 bg-slate-300 rounded-xl" />
+                <input defaultValue={curUser?.data?.name} type="text" placeholder="Name" className="p-3 bg-slate-200 rounded-xl" />
+                <input type="text" placeholder="Old password" className="p-3 bg-slate-200 rounded-xl" />
+                <input type="text" placeholder="New password" className="p-3 bg-slate-200 rounded-xl" />
+                <button className="p-3 text-white bg-gradient-to-b from-pink to-purple rounded-xl hover:opacity-95">Simpan</button>
             </form>
             <div className="text-right">
-                <span className="text-red-500 p-2">Keluar</span>
+                <span className="p-2 text-red-500">Keluar</span>
             </div>
         </div>
     )

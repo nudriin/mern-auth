@@ -80,7 +80,7 @@ export default function SignIn() {
     }
 
     return (
-        <div className="px-4 max-w-lg mx-auto mt-28">
+        <div className="h-screen px-4 max-w-lg mx-auto mt-28">
             <h1 className="text-3xl text-center font-bold my-16 font-rubik">Masuk</h1>
             <form className="flex flex-col gap-4">
                 <input className="bg-slate-100 p-3 rounded-xl" onChange={handleChange} type="text" id="username" name="username" placeholder="Username" />
