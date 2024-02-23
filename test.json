@@ -1,0 +1,20 @@
+{
+    "user": {
+        "token": {
+            "data": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im51cmRpbmhpc2hhc3k3YyIsImlhdCI6MTcwODY3NzA1MSwiZXhwIjoxNzA4NjgwNjUxfQ.D1LSCxDw1qAzTu4xU0npc4UwVJd37d_WVi0npDh-jZY"
+            }
+        },
+        "curUser": {
+            "data": {
+                "username": "nurdinhishasy7c",
+                "email": "nurdinhishasy7c@gmail.com",
+                "name": "Nurdin Hishasy",
+                "profile_pic": "https://lh3.googleusercontent.com/a/ACg8ocLJbvT2mR74yHN8mfxyms5rPLUU2K7vXBSZPOJ7IB4nhT0=s96-c"
+            }
+        },
+        "loading": false,
+        "errors": false
+    },
+    "_persist": "{\"version\":1,\"rehydrated\":true}"
+}

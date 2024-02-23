@@ -42,6 +42,7 @@ export default function Profile() {
         );
         setImageSuccess(false);
     }
+    console.log(curUser.data.profile_pic);
 
     return (
         <div className="max-w-lg p-3 mx-auto">
@@ -55,7 +56,9 @@ export default function Profile() {
                 request.resource.contentType.matches('image/.*') */}
                 <input type="file" ref={fileRef} hidden accept="image/*" onChange={(event) => setImage(event.target.files[0])} />
                 {/* Jika img di klik maka akan tampil pilihan file */}
-                <img src={formData.profile_pic ? formData.profile_pic : curUser?.data?.profile_pic} onClick={() => fileRef.current.click()} className="self-center object-cover object-center w-40 h-40 rounded-full cursor-pointer" />
+                <img src={formData.profile_pic ? formData.profile_pic : curUser.data.profile_pic} onClick={() => fileRef.current.click()} className="self-center object-cover object-center w-40 h-40 rounded-full cursor-pointer" />
+                {/* <img src="https://lh3.googleusercontent.com/a/ACg8ocLJbvT2mR74yHN8mfxyms5rPLUU2K7vXBSZPOJ7IB4nhT0=s96-c" className="mx-auto h-[190px] w-[190px] object-cover object-center rounded-full " /> */}
+
                 <p className="text-sm text-center">
                     {imageError ? (
                         <span className="text-red-500">Gagal mengunggah foto (File maksimal berukuran 2MB)</span>

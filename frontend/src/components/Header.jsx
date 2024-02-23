@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom"; // import link agar ketika tombol di tekan maka akan menuju ke page tertentu
+import { NavLink } from "react-router-dom"; // import link agar ketika tombol di tekan maka akan menuju ke page tertentu
 import { useSelector } from "react-redux";
 
 export default function Header() {
@@ -12,16 +12,25 @@ export default function Header() {
                 <NavLink to="/">
                     <h1 className="hidden text-xl font-bold text-blue sm:block text-purple">BinaryTalkHub</h1>
                 </NavLink>
-                <ul className="flex gap-4">
+                <ul className="flex gap-2">
                     <NavLink to="/" className={({isActive}) => isActive ? activeLink : nonActiveLink}>
                         <li className="px-4 py-1 hover:bg-purple hover:white hover:rounded-full">Beranda</li>
                     </NavLink>
                     <NavLink to="/about" className={({isActive}) => isActive ? activeLink : nonActiveLink}>
                         <li className="px-4 py-1 hover:bg-purple hover:white hover:rounded-full">Tentang</li>
                     </NavLink>
+                    <NavLink to="/about" className={({isActive}) => isActive ? activeLink : nonActiveLink}>
+                    </NavLink>
+                    {curUser ? (
+                        <NavLink to="/dashboard">
+                            <li className="px-4 py-1 hover:bg-purple hover:white hover:rounded-full">Dashboard</li>
+                        </NavLink>
+                    ) : ("")}
                     {curUser ? (
                         <NavLink to="/profile">
                             <img src={curUser?.data?.profile_pic} className="object-cover object-center w-8 h-8 ml-3 rounded-full" />
+                            {/* <img src="https://lh3.googleusercontent.com/a/ACg8ocLJbvT2mR74yHN8mfxyms5rPLUU2K7vXBSZPOJ7IB4nhT0=s96-c" className="object-cover object-center w-8 h-8 ml-3 rounded-full" /> */}
+                            
                         </NavLink>
                     ) : (
                         <NavLink to="/sign-in">

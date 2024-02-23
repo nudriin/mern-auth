@@ -11,7 +11,8 @@ const firebaseConfig = {
     projectId: "mern-auth-5a53c",
     storageBucket: "mern-auth-5a53c.appspot.com",
     messagingSenderId: "921031839392",
-    appId: "1:921031839392:web:f7e710413ae329d39ec3c5"
+    appId: "1:921031839392:web:f7e710413ae329d39ec3c5",
+    databaseURL: "hhttps://mern-auth-5a53c-default-rtdb.asia-southeast1.firebasedatabase.app/",
 };
 
 // Initialize Firebase
