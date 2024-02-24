@@ -548,3 +548,4 @@ describe("PATCH /api/users/current", () => {
         expect(response.body.errors).toBeDefined();
     });
 });
+
