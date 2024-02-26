@@ -39,6 +39,11 @@ const userSlice = createSlice({
             state.loading = false;
             state.errors = false;
         },
+        
+        signUpSuccess : (state) => {
+            state.loading = false;
+            state.errors = false;
+        },
 
         getUserSuccess: (state, action) => {
             // * data state token nya akan di simpan di inisialisasikan ke state
@@ -53,7 +58,7 @@ const userSlice = createSlice({
 });
 
 // destructuring dan export datanya dari slicer actions
-export const {signInStart, signInSuccess, signInFailed, getUserSuccess, buttonStart, buttonFinish, buttonFailed } = userSlice.actions;
+export const {signInStart, signInSuccess, signInFailed, getUserSuccess, buttonStart, buttonFinish, buttonFailed, signUpSuccess } = userSlice.actions;
 
 //! ini akan kita tambah ke reducer yang ada di store
 // ibaratnya userSlice ini adalah komponen yang akan di tambah ke main file yang ada di store 

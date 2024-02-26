@@ -74,7 +74,7 @@ const userLogin = async (request) => {
     const token = jwt.sign({
         username: user.username
     }, process.env.JWT_SECRET, {
-        expiresIn: 60 * 60 // akan expired dalam 1 jam
+        expiresIn: '1h'
     });
 
     // return sebagai object token
@@ -103,10 +103,11 @@ const userGoogleAuth = async (request) => {
     });
 
     if (user) {
+
         const token = jwt.sign({
             username: user.username
         }, process.env.JWT_SECRET, {
-            expiresIn: 60 * 60
+            expiresIn: '1h'
         });
         return {
             // username: user.username,
@@ -120,7 +121,7 @@ const userGoogleAuth = async (request) => {
         const token = jwt.sign({
             username: result.username
         }, process.env.JWT_SECRET, {
-            expiresIn: 60 * 60
+            expiresIn: '1h'
         });
         return {
             // username: result.username,

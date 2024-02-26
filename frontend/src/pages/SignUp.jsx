@@ -2,14 +2,16 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth.jsx";
 import swal from "sweetalert2";
+import { useSelector, useDispatch } from "react-redux";
+import { signInFailed, signInStart, signUpSuccess } from "../redux/user/userSlice.js";
 export default function SignUp() {
     const [formData, setFormData] = useState({}); // state untuk form data
-    const [errors, setErrors] = useState("");
-    const [loading, setLoading] = useState(false);
+    const { loading } = useSelector((state) => state.user);
     const navigate = useNavigate(); // navigate disini untuk menavigasi setelah login akan kemana
+    const dispatch = useDispatch();
 
     const handleChange = (e) => {
-        setFormData({...formData, [e.target.id] : e.target.value});
+        setFormData({ ...formData, [e.target.id]: e.target.value });
     }
 
 
@@ -17,7 +19,7 @@ export default function SignUp() {
     const handleSubmit = async (event) => {
         event.preventDefault(); // disable refresh
         try {
-            setLoading(true); // membuat loadingnya jadi true
+            dispatch(signInStart());
             const response = await fetch("/api/users", {
                 method: 'POST',
                 headers: {
@@ -31,22 +33,24 @@ export default function SignUp() {
                 swal.fire({
                     title: "Errors",
                     text: data.errors,
-                    icon: "error"
+                    icon: "error",
+                    customClass: 'bg-slate-900 text-purple rounded-xl'
                 });
-                setErrors(data.errors); // set errorsnya dengan data errors
+                dispatch(signInFailed());
             }
-            setLoading(false); // ketika selesai loadingnyafalse   
-
             if (!data.errors) {
                 swal.fire({
                     title: "Success",
                     text: "Sign up success",
-                    icon: "success"
+                    icon: "success",
+                    customClass: 'bg-slate-900 text-purple rounded-xl'
                 });
-                navigate("/profile");
+                dispatch(signUpSuccess());
+                navigate("/sign-in");
             }
         } catch (e) {
             console.log(e);
+            dispatch(signInFailed());
         }
 
 

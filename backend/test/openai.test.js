@@ -140,3 +140,41 @@ describe('POST /api/summarize/youtube', () => {
         expect(response.body.data.message).toBeDefined();
     });
 });
+
+describe('POST /api/scrap/youtube', () => {
+    beforeEach(async () => {
+        await createTestUser();
+    });
+
+    afterEach(async () => {
+        await removeTestUser();
+    });
+
+    it("Should success get caption", async () => {
+
+        // Login first
+        let response = await supertest(web)
+            .post("/api/users/login")
+            .send({
+                username: "test",
+                password: "12345678"
+            });
+        const token = response.body.data.token;
+
+        // get user data
+        response = await supertest(web)
+            .post("/api/caption/youtube")
+            .set({
+                "Authorization": `Bearer ${token}`
+            })
+            .send(
+                {
+                    videoId : "OXtZfPZIex4"
+                }
+            );
+
+        console.log(response.body.data.caption);
+        expect(response.status).toBe(200);
+        expect(response.body.data.caption).toBeDefined();
+    });
+});

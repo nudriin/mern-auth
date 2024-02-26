@@ -14,11 +14,23 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #49108B;
+  background: #49108b;
   border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #7E30E1;
+  background: #7e30e1;
 }
+
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid #49108b;
+  border-right-color: #E26EE5;
+  animation: l2 1s infinite linear;
+}
+@keyframes l2 {to{transform: rotate(1turn)}}

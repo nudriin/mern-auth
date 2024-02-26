@@ -74,7 +74,7 @@ export default function Chart() {
         }
 
         currRef.current = new chartjs(ctx, config);
-    }, []); // useEffect runs only once after the initial render
+    }, [chartRef]); // useEffect runs only once after the initial render
 
     return (
         <section className="h-full mx-auto bg-white text-slate-900">

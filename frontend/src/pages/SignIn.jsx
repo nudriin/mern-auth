@@ -38,7 +38,8 @@ export default function SignIn() {
                 swal.fire({
                     title : "Errors",
                     text: data.errors,
-                    icon: "error"
+                    icon: "error",
+                    customClass : 'bg-slate-900 text-purple rounded-xl'
                 });
                 dispatch(signInFailed(data.errors));
                 return; // akan di return agar tidak lanjut kebawahnya lagi
@@ -63,7 +64,8 @@ export default function SignIn() {
                 swal.fire({
                     title : "Success",
                     text: "Login success!",
-                    icon: "success"
+                    icon: "success",
+                    customClass : 'bg-slate-900 text-purple rounded-xl'
                 });
                 // // setLoading(false);
                 navigate("/profile"); // jika tidak error akan langsung di alihkan ke halaman /profile

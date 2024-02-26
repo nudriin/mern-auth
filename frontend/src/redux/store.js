@@ -26,3 +26,8 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+// Set timeout untuk menghapus data dari local storage setelah 1 jam
+setTimeout(() => {
+    persistor.purge();
+}, 60 * 60 * 1000);

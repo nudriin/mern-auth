@@ -35,11 +35,11 @@ const YoutubeSummarizer = () => {
         body: JSON.stringify(formData)
       });
       const data = await response.json();
+      setMessage(data);
       if (data.errors) {
         dispatch(buttonFailed(data.errors));
         return
       }
-      setMessage(data);
       dispatch(buttonFinish());
     } catch (e) {
       console.log(e);
@@ -49,11 +49,12 @@ const YoutubeSummarizer = () => {
 
   return (
     <DashboardLayout>
-      <div className="min-h-screen">
+      <div className="min-h-screen space-y-4">
         <div className="flex gap-4">
           <img src={youtube} alt="" className="h-[50px] w-[50px]" />
-          <h1 className="text-[45px] font-futura leading-tight pb-8">YouTube Summarizer</h1>
+          <h1 className="text-[45px] font-futura leading-tight">YouTube Summarizer</h1>
         </div>
+        <p className="text-justify w-9/12" >YouTube Summarizer adalah alat yang memanfaatkan kemampuan ChatGPT untuk membuat ringkasan dari video YouTube. Fitur ini dirancang untuk membantu pengguna mendapatkan gambaran cepat dan efisien tentang konten video tanpa harus menonton seluruh durasinya</p>
         <div className="w-9/12 p-6 bg-white border rounded-xl">
           <form className="flex gap-2">
             <input type="text" id="message" placeholder="Your YouTube URL" onChange={handleChange} className="flex-1 p-2 rounded-xl border-slate-900" />
@@ -67,9 +68,9 @@ const YoutubeSummarizer = () => {
           ) : (
             <p>{errors}</p>
           )}
-        </div>) : (<div className="flex flex-col items-center w-9/12 gap-4 mt-10">
+        </div>) : (<div className="flex flex-col items-center w-9/12 gap-4">
           <img src={empty} className="w-72 h-72" />
-          <h1 className="text-sm">Belum ada ringkasan.</h1>
+          <h1 className="text-sm mb-10">Belum ada ringkasan.</h1>
         </div>)}
       </div>
     </DashboardLayout>
