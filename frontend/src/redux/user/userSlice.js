@@ -53,12 +53,27 @@ const userSlice = createSlice({
         signInFailed: (state, action) => {
             state.loading = false,
             state.errors = action?.payload // errorny akan diambil dari data responsenya
+        },
+
+        updateUserStart: (state) => {
+            state.loading;
+        },
+
+        updateUserSuccess: (state, action) => {
+            state.loading = false;
+            state.errors = false;
+            state.curUser = action.payload;
+        },
+
+        updateUserFailed: (state, action) => {
+            state.loading = false;
+            state.errors = action.payload;
         }
     }
 });
 
 // destructuring dan export datanya dari slicer actions
-export const {signInStart, signInSuccess, signInFailed, getUserSuccess, buttonStart, buttonFinish, buttonFailed, signUpSuccess } = userSlice.actions;
+export const {signInStart, signInSuccess, signInFailed, getUserSuccess, buttonStart, buttonFinish, buttonFailed, signUpSuccess, updateUserSuccess, updateUserStart, updateUserFailed } = userSlice.actions;
 
 //! ini akan kita tambah ke reducer yang ada di store
 // ibaratnya userSlice ini adalah komponen yang akan di tambah ke main file yang ada di store 

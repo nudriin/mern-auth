@@ -1,4 +1,5 @@
 import HeroHeading from './HeroHeading';
+import { Link } from 'react-router-dom';
 export default function Hero() {
     return (
         <section id="1" className="flex items-center justify-center h-screen text-white">
@@ -11,7 +12,9 @@ export default function Hero() {
                     <HeroHeading />
                     <p className="my-7 opacity-65">Chat with the smartest AI - Experience teh power of AI</p>
                     <div className="flex justify-center items-center gap-4">
-                        <button className="bg-gradient-to-t from-pink to-purple py-2 px-4 rounded-full text-dark-white hover:shadow-sm hover:shadow-purple">Mulai</button>
+                        <Link to="/dashboard">
+                            <button className="bg-gradient-to-t from-pink to-purple py-2 px-4 rounded-full text-dark-white hover:shadow-sm hover:shadow-purple">Mulai</button>
+                        </Link>
                         <button>Tutorial</button>
                     </div>
                 </div>

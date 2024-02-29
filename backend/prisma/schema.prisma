@@ -15,7 +15,7 @@ model User {
   email String @db.VarChar(100) @unique
   password String @db.VarChar(100)
   name String @db.VarChar(100)
-  profile_pic String? @default("https://firebasestorage.googleapis.com/v0/b/mern-auth-5a53c.appspot.com/o/profile.svg?alt=media&token=37afdff7-242d-4f97-9062-677c7cdd898d")
+  profile_pic String? @db.VarChar(1000) @default("https://firebasestorage.googleapis.com/v0/b/mern-auth-5a53c.appspot.com/o/profile.svg?alt=media&token=37afdff7-242d-4f97-9062-677c7cdd898d")
 
   @@map("user")
 }

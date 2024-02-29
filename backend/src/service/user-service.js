@@ -42,6 +42,13 @@ const userRegister = async (request) => {
     });
 
     return result;
+
+    // {
+    //     username: true,
+    //     email: true,
+    //     name: true,
+    //     profile_pic : true
+    // }
 }
 
 const userLogin = async (request) => {

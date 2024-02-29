@@ -20,7 +20,7 @@ export default function SignUp() {
         event.preventDefault(); // disable refresh
         try {
             dispatch(signInStart());
-            const response = await fetch("/api/users", {
+            const response = await fetch("/v1/api/users", {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
