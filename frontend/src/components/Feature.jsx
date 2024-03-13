@@ -2,7 +2,7 @@ import yotubeSvg from "../assets/images/web_display/youtube_to_text.svg";
 import pdfSvg from "../assets/images/web_display/pdf.svg";
 export default function Feature() {
     return (
-        <section className="mx-auto h-full text-slate-900 bg-white">
+        <section className="mx-auto min-h-screen text-slate-900 bg-white">
             <div className="container w-9/12 mx-auto pt-1 pb-20">
                 <h1 className="text-[45px] font-bold font-futura text-center my-20">Fitur utama kami</h1>
                 <div className="flex flex-col items-stretch sm:flex-row justify-center gap-4 flex-wrap">

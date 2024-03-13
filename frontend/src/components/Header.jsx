@@ -22,7 +22,7 @@ export default function Header() {
                     <NavLink to="/about" className={({isActive}) => isActive ? activeLink : nonActiveLink}>
                     </NavLink>
                     {curUser ? (
-                        <NavLink to="/dashboard">
+                        <NavLink to="/pdfsummarizer">
                             <li className="px-4 py-1 hover:bg-purple hover:white hover:rounded-full">Dashboard</li>
                         </NavLink>
                     ) : ("")}

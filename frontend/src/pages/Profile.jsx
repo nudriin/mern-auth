@@ -5,6 +5,7 @@ import { app } from "../firebase";
 import { buttonFinish, buttonStart, updateUserFailed, updateUserStart, updateUserSuccess } from "../redux/user/userSlice";
 import { persistor } from "../redux/Store";
 import swal from "sweetalert2";
+import { data } from "autoprefixer";
 export default function Profile() {
     const fileRef = useRef(null); // membuat referensi object untuk input
     const { curUser, token, loading } = useSelector((state) => state.user);
@@ -34,7 +35,7 @@ export default function Profile() {
             setImageProgress(progress);
         },
             (error) => {
-                dispatch(buttonStart());
+                dispatch(buttonFinish());
                 setImageSuccess(false);
                 setImageError(error);
             },
@@ -42,6 +43,47 @@ export default function Profile() {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
                     setFormData({ ...formData, profile_pic: downloadUrl });
                     console.log(downloadUrl);
+                    dispatch(updateUserStart());
+                    return fetch("/v1/api/users/current", {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token?.data?.token}`
+                        },
+                        body: JSON.stringify({
+                            profile_pic : downloadUrl
+                        })
+                    }).then((data) => {
+                        if(!data.ok) {
+                            throw new Error(data.statusText);
+                        }
+                        return data.json();
+                    }).then((response) => {
+                        console.log(response);
+                        swal.fire({
+                            title: "Success",
+                            text: "Profile picture updated!",
+                            icon: "success",
+                            customClass: 'bg-slate-900 text-purple rounded-xl'
+                        });
+                        dispatch(updateUserSuccess(response));
+                    }).catch((e) => {
+                        dispatch(updateUserFailed(e));
+                        swal.fire({
+                            title: "Errors",
+                            text: e,
+                            icon: "error",
+                            customClass: 'bg-slate-900 text-purple rounded-xl'
+                        });
+                    })
+                }).catch((e) => {
+                    dispatch(updateUserFailed(e));
+                        swal.fire({
+                            title: "Errors",
+                            text: e,
+                            icon: "error",
+                            customClass: 'bg-slate-900 text-purple rounded-xl'
+                        });
                 });
                 setImageError(false);
                 setImageSuccess(true);
@@ -101,22 +143,6 @@ export default function Profile() {
         }
     }
 
-    const handleCancel = async (e) => {
-        e.preventDefault();
-        if (formData.profile_pic) {
-            try {
-                const storage = getStorage(app);
-                const fileRef = storage.refFromURL(formData.profile_pic);
-                if (fileRef.exist()) {
-                    const response = await fileRef.delete();
-                    console.log(response);
-                }
-            } catch (e) {
-                console.log(e);
-            }
-        }
-    }
-
     const handleLogout = async () => {
         swal.fire({
             title: "Are you sure?",
@@ -133,15 +159,53 @@ export default function Profile() {
                     title: "Success",
                     text: "Logout success",
                     icon: "success",
-                    showConfirmButton : false,
+                    showConfirmButton: false,
                     customClass: 'bg-slate-900 text-purple rounded-xl'
                 });
                 persistor.purge();
                 window.location.reload(true);
             }
         });
+    }
 
-
+    const handleDelete = async () => {
+        swal.fire({
+            title: "Are you sure?",
+            text: "You delete your account!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#7E30E1",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+            customClass: 'bg-slate-900 text-purple rounded-xl'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swal.fire({
+                    title: "Success",
+                    text: "Delete success",
+                    icon: "success",
+                    customClass: 'bg-slate-900 text-purple rounded-xl'
+                }).then(() => {
+                    fetch("/v1/api/users/current/delete", {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token?.data?.token}`
+                        }
+                    });
+                }).then(() => {
+                    persistor.purge();
+                    window.location.reload(true);
+                }).catch((e) => {
+                    swal.fire({
+                        title: "Errors",
+                        text: e.message,
+                        icon: "error",
+                        customClass: 'bg-slate-900 text-purple rounded-xl'
+                    });
+                });
+            }
+        });
     }
 
     return (
@@ -174,9 +238,9 @@ export default function Profile() {
                 <input defaultValue={curUser?.data?.email} type="text" placeholder="Email" id="email" onChange={handleChange} disabled={true} className="p-3 bg-slate-300 rounded-xl" />
                 <input defaultValue={curUser?.data?.name} type="text" placeholder="Name" id="name" onChange={handleChange} className="p-3 bg-slate-200 rounded-xl" />
                 <button disabled={loading} className="p-3 text-white bg-gradient-to-b from-pink to-purple rounded-xl hover:opacity-95" onClick={handleClick}>Simpan</button>
-                <button disabled={loading} className="p-3 text-white bg-gradient-to-br from-red-400 to-red-600 rounded-xl hover:opacity-95" onClick={handleCancel}>Batal</button>
             </form>
-            <div className="text-right">
+            <div className="flex justify-between">
+                <span disabled={loading} onClick={handleDelete} className="p-2 text-red-500 cursor-pointer">Hapus akun</span>
                 <span disabled={loading} onClick={handleLogout} className="p-2 text-red-500 cursor-pointer">Keluar</span>
             </div>
         </div>

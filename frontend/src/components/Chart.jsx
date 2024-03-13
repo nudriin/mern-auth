@@ -77,7 +77,7 @@ export default function Chart() {
     }, [chartRef]); // useEffect runs only once after the initial render
 
     return (
-        <section className="h-full mx-auto bg-white text-slate-900">
+        <section className="min-h-Screen mx-auto bg-white text-slate-900">
             <h1 className="text-[45px] text-slate-900 font-bold font-futura text-center py-10">Index penggunaan AI di dunia</h1>
             <div className="grid items-center justify-center grid-cols-12 gap-4 p-4">
                 <div className="col-span-6 p-6 ml-10 shadow-xl bg-slate-900 rounded-xl">
