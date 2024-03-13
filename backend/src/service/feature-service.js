@@ -4,6 +4,7 @@ import { ResponseError } from "../error/response-error.js";
 import { validate } from "../validation/validate.js";
 import { youtubeUrlValidation } from "../validation/feature-validation.js";
 import { youtube } from "../app/youtube.js";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
 const summarizer = async (request) => {
@@ -34,21 +35,19 @@ const parser = async (requets) => {
         throw new ResponseError(400, "No file provided");
     }
 
+    const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const data = await PDF(requets.files.pdfFile);
     const longMessage = `Summarize the following text to Indonesian and provide a response that covers approximately 75% of the summary, extracting key information. Text : ${data.text}`
     const message = longMessage.substring(0, 16380); // batasin hanya sampai 16385 karakter
 
     try {
-        const completion = await openAi?.chat?.completions?.create({
-            messages: [{
-                role: "user",
-                content: message
-            }],
-            model: "gpt-3.5-turbo",
-            max_tokens: 4096
-        });
+        const result = await model.generateContent(message);
+        const response = await result.response;
+        const text = response.text();
+        const clearTxt = text.replace(/\*\*/g, '').replace(/\*/g, '');
         return {
-            message: completion?.choices[0]?.message?.content
+            message: clearTxt
         }
     } catch (e) {
         throw e;
@@ -65,7 +64,7 @@ const captionScrap = async (videoId) => {
         });
 
         const captions = response.data.items;
-        
+
         // Ambil teks subtitle untuk setiap caption
         const captionsWithText = await Promise.all(captions.map(async caption => {
             const textResponse = await youtube.captions.download({

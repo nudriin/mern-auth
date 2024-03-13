@@ -1,4 +1,4 @@
-import Chart from "../components/Chart";
+// import Chart from "../components/Chart";
 import Feature from "../components/Feature";
 import Hero from "../components/Hero";
 import Team from "../components/Team";
@@ -10,7 +10,7 @@ export default function Home() {
             <Hero />
             <Feature />
             <Why />
-            <Chart />
+            {/* <Chart /> */}
             <Team />
         </>
     )

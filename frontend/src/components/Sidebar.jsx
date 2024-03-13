@@ -1,18 +1,18 @@
 import { NavLink } from "react-router-dom"
 import pdf from "../assets/images/web_display/PDFSideBar.svg";
-import youtube from "../assets/images/web_display/YoutubeSideBar.svg";
+// import youtube from "../assets/images/web_display/YoutubeSideBar.svg";
 export default function Sidebar() {
     const routes = [
         {
             label: "PDF Sumarizer",
             href: "/pdfsummarizer",
             icon : pdf
-        },
-        {
-            label: "Youtube Sumarizer",
-            href: "/youtubesummarizer",
-            icon : youtube
-        },
+        }
+        // {
+        //     label: "Youtube Sumarizer",
+        //     href: "/youtubesummarizer",
+        //     icon : youtube
+        // },
     ];
     const activeLink = 'bg-purple white rounded-full';
     const nonActiveLink = '';

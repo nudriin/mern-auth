@@ -5,7 +5,7 @@ export default function HeroHeading() {
         <div className='text-[45px] font-bold font-futura leading-tight '>
             <TypeAnimation
                 sequence={[
-                    'PDF ke GPT & YouTube Summarizer', // Types 'PDF ke GPT & YouTube Summarizer'
+                    'PDF ke GPT Summarizer', // Types 'PDF ke GPT & YouTube Summarizer'
                     5000, // Waits 1s
                     '',
                     () => {

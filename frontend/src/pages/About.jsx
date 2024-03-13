@@ -8,8 +8,7 @@ export default function About() {
                         <div className="text-justify md:p-6 w-9/12 text-md mx-auto">
                             <p>Kami di BinaryTalkHub bertekad untuk menyediakan solusi 
                                 inovatif dan efisien bagi pengguna yang mencari 
-                                cara untuk mengonversi teks dari PDF ke ChatGPT dan merangkum 
-                                konten video YouTube dengan cepat dan akurat.</p> <br />
+                                cara untuk mengonversi teks dari PDF ke ChatGPT dengan cepat dan akurat.</p> <br />
                             <p>Dibangun dengan dedikasi untuk menghadirkan pengalaman yang unggul, 
                                 BinaryTalkHub menyediakan platform yang mudah digunakan dan andal 
                                 bagi pengguna dari berbagai latar belakang dan kebutuhan.</p> <br />

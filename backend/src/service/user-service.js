@@ -110,7 +110,6 @@ const userGoogleAuth = async (request) => {
     });
 
     if (user) {
-
         const token = jwt.sign({
             username: user.username
         }, process.env.JWT_SECRET, {
