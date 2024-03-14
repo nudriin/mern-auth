@@ -10,6 +10,7 @@ import SignRoute from "./components/SignRoute";
 import Footer from "./components/Footer";
 import PdfSummarizer from "./pages/PdfSummarizer";
 import YoutubeSummarizer from "./pages/YoutubeSummarizer";
+import Users from "./pages/Users";
 export default function App() {
   // ! Membuat routing file pada react component
   return (
@@ -21,6 +22,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/users" element={<Users />} />
         <Route element={<SignRoute />}>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />

@@ -3,7 +3,7 @@ import profileSvg from "../assets/images/profile.svg"
 import nurdin from "../assets/images/web_display/nurdin.jpg"
 export default function Team() {
     return (
-        <section className="h-full mx-auto bg-white text-slate-900">
+        <section className="h-full mx-auto bg-slate-900 text-white">
             <div className="container w-9/12 pt-1 pb-20 mx-auto">
                 <div className="p-6 my-20 text-center bg-gradient-to-t from-dark-purple via-purple to-pink rounded-3xl grow">
                     <h1 className="text-[45px] text-white font-bold font-futura text-left my-10 ml-24">Tim kami</h1>

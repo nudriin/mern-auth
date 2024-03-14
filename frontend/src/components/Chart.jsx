@@ -2,38 +2,51 @@
 import { useEffect, useRef, useState } from "react";
 import { Chart as chartjs } from "chart.js/auto";
 import { getDatabase, onValue, ref } from "firebase/database";
+import React from "react";
 
 export default function Chart() {
     const chartRef = useRef(null);
     const currRef = useRef(null);
-    // const [dataa, setDataa] = useState([]);
-    // Initialize Realtime Database and get a reference to the service
-    const database = getDatabase();
-    const references = ref(database, '/');
-    let datas = [];
-    onValue(references, (snapshot) => {
-        datas = snapshot.val();
-        // setDataa(datas);
-    })
-    let commercial = [];
-    let country = [];
-    let fullData = [];
-    console.log(datas);
-    for (const data of datas) {
-        if(data.Commercial > 5){
-            commercial.push(data.Commercial);
-            country.push(data.Country);
-            fullData.push(data);
-        }
-    }
+    const [country, setCountry] = useState([]);
+    const [count, setCount] = useState([]);
+    const [fullData, setFullData] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("/v1/api/charts", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                const datas = await response.json();
+                console.log(datas);
+                const countries = [];
+                const counts = [];
+                const fullDatas = [];
+                for (const data of datas.data) {
+                    if(data.Jumlah_Pengguna > 40){
+                        countries.push(data.Negara);
+                        counts.push(data.Jumlah_Pengguna);
+                        fullDatas.push(data); // Menyimpan data lengkap dari API
+                    }
+                }
+                setCountry(countries);
+                setCount(counts);
+                setFullData(fullDatas);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
 
-
+        fetchData();
+    }, []); // useEffect runs only once after the initial render
     useEffect(() => {
         const data = {
             labels: country,
             datasets: [{
                 label: 'Index penggunaan AI di dunia',
-                data: commercial,
+                data: count,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(255, 159, 64, 0.2)',
@@ -52,7 +65,7 @@ export default function Chart() {
                     'rgb(153, 102, 255)',
                     'rgb(201, 203, 207)'
                 ],
-                color : [
+                color: [
                     'rgb(255,255,255)'
                 ],
                 borderWidth: 1,
@@ -69,7 +82,7 @@ export default function Chart() {
                 indexAxis: 'y',
             }
         };
-        if(currRef.current){
+        if (currRef.current) {
             currRef.current.destroy();
         }
 
@@ -78,7 +91,7 @@ export default function Chart() {
 
     return (
         <section className="min-h-Screen mx-auto bg-white text-slate-900">
-            <h1 className="text-[45px] text-slate-900 font-bold font-futura text-center py-10">Index penggunaan AI di dunia</h1>
+            <h1 className="text-[45px] w-9/12 mx-auto text-slate-900 font-bold font-futura text-center py-10">Pengguna Binary Talk Hub di berbagai negara</h1>
             <div className="grid items-center justify-center grid-cols-12 gap-4 p-4">
                 <div className="col-span-6 p-6 ml-10 shadow-xl bg-slate-900 rounded-xl">
                     <canvas className="w-[200px] h-full" ref={chartRef}></canvas>
@@ -97,15 +110,15 @@ export default function Chart() {
                         <tbody>
                             {fullData.map((value, index) => (
                                 <tr className="border-2 border-slate-900" key={index}>
-                                    <td className="px-6 py-3">{value.Country}</td>
-                                    <td className="px-6 py-3">{value.Commercial}</td>
+                                    <td className="px-6 py-3">{value.Negara}</td>
+                                    <td className="px-6 py-3">{value.Jumlah_Pengguna}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
             </div>
-            
+
         </section>
     );
 }
