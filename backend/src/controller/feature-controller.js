@@ -1,15 +1,15 @@
 import featureService from "../service/feature-service.js"
 
-const summarize = async (req, res, next) => {
-    try {
-        const result = await featureService.summarizer(req.body);
-        res.status(200).json({
-            data : result
-        });
-    } catch (e) {
-        next(e)
-    }
-}
+// const summarize = async (req, res, next) => {
+//     try {
+//         const result = await featureService.summarizer(req.body);
+//         res.status(200).json({
+//             data : result
+//         });
+//     } catch (e) {
+//         next(e)
+//     }
+// }
 
 const parse = async (req, res, next) => {
     try {
@@ -36,7 +36,7 @@ const caption = async (req,res,next) => {
 
 
 export default {
-    summarize,
+    // summarize,
     parse,
     caption
 }
