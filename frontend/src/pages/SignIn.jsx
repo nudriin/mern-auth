@@ -24,7 +24,7 @@ export default function SignIn() {
             // // setLoading(true);
             // ! Menggunakan reducer signInStart dimana loading akan di set true
             dispatch(signInStart());
-            const response = await fetch("/v1/api/users/login", {
+            const response = await fetch("/api/users/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -52,7 +52,7 @@ export default function SignIn() {
                 if(!loading) {
                     console.log(data.data.token);
                     console.log(`Bearer ${data?.data?.token}`);
-                    const response = await fetch("/v1/api/users/current", {
+                    const response = await fetch("/api/users/current", {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",

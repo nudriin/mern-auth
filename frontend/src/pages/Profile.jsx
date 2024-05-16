@@ -45,7 +45,7 @@ export default function Profile() {
                     setFormData({ ...formData, profile_pic: downloadUrl });
                     console.log(downloadUrl);
                     dispatch(updateUserStart());
-                    return fetch("/v1/api/users/current", {
+                    return fetch("/api/users/current", {
                         method: "PATCH",
                         headers: {
                             "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export default function Profile() {
         e.preventDefault();
         try {
             dispatch(updateUserStart());
-            const response = await fetch("/v1/api/users/current", {
+            const response = await fetch("/api/users/current", {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

@@ -21,11 +21,6 @@ const login = async (req, res, next) => {
         res.status(200).json({
             data : result
         });
-        // const expired = 60 * 60 * 1000;
-        // cookie("access_token", result.token, {
-        //     maxAge : expired,
-        //     httpOnly : true
-        // }).
     } catch (e) {
         next(e);
     }
@@ -42,11 +37,6 @@ const googleAuth = async (req, res, next) => {
         res.status(200).json({
             data : result
         });
-        // const expired = 60 * 60 * 1000;
-        // .cookie("access_token", result.token, {
-        //     maxAge : expired,
-        //     httpOnly : true
-        // })
 
     } catch (e) {
         next(e)
@@ -70,6 +60,7 @@ const get = async(req, res, next) => {
 const update = async(req, res, next) => {
     try{
         const request = req.body;
+        request.username = req.user.username;
 
         const result = await userService.userUpdate(request);
         res.status(200).json({
@@ -80,10 +71,24 @@ const update = async(req, res, next) => {
     }
 }
 
+const remove = async(req, res, next) => {
+    try {
+        const username = req.user.username;
+
+        await userService.userRemove(username);
+        res.status(200).json({
+            data : "OK"
+        });
+    } catch (e) {
+        next(e);
+    }
+}
+
 export default {
     register,
     login,
     googleAuth,
     get,
-    update
+    update,
+    remove
 }

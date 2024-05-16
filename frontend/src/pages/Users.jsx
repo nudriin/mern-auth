@@ -17,7 +17,7 @@ export default function Users() {
                 });
                 const datas = await response.json();
                 console.log(datas);
-                setFullData(datas.data);
+                setFullData(datas.data['all']);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -36,7 +36,7 @@ export default function Users() {
 
     return (
         <div>
-            <section className="mx-auto h-full text-slate-900 bg-white pt-20">
+            <section className="h-full pt-20 mx-auto bg-white text-slate-900">
                 <h1 className="text-[25px] md:text-[40px] font-bold font-futura mx-auto px-6 py-4 md:w-1/2">Pengguna Binary Talk Hub</h1>
                 <div className="container w-9/12 mx-auto">
                         <div className="overflow-auto h-96">
@@ -85,7 +85,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
             <ul className="flex justify-center my-10">
                 {pageNumbers.map(number => (
                     <li key={number}>
-                        <button className="px-3 py-1 m-1 bg-dark-purple text-white hover:bg-purple" onClick={() => paginate(number)}>
+                        <button className="px-3 py-1 m-1 text-white bg-dark-purple hover:bg-purple" onClick={() => paginate(number)}>
                             {number}
                         </button>
                     </li>

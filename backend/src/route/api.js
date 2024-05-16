@@ -8,6 +8,7 @@ userRouter.use(authMiddleware);
 
 userRouter.get("/api/users/current", userController.get);
 userRouter.patch("/api/users/current", userController.update);
+userRouter.delete("/api/users/current/delete", userController.remove);
 
 userRouter.post("/api/summarize/youtube", featureController.summarize);
 userRouter.post("/api/summarize/pdf", featureController.parse);

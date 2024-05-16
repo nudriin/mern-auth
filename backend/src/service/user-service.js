@@ -37,7 +37,7 @@ const userRegister = async (request) => {
             username: true,
             email: true,
             name: true,
-            profile_pic : true
+            profile_pic: true
         }
     });
 
@@ -166,46 +166,67 @@ const userUpdate = async (request) => {
     const validRequest = validate(userUpdateValidation, request);
 
     const user = await prismaClient.user.findUnique({
-        where : {
-            username : validRequest.username
+        where: {
+            username: validRequest.username
         }
     });
 
-    if(!user) {
+    if (!user) {
         throw new ResponseError(404, "User not found");
     }
     const data = {}
 
-    if(validRequest.name){
+    if (validRequest.name) {
         data.name = validRequest.name;
     }
 
-    if(validRequest.profile_pic){
+    if (validRequest.profile_pic) {
         data.profile_pic = validRequest.profile_pic;
     }
-    
-    if(validRequest.old_password && validRequest.password){
+
+    if (validRequest.old_password && validRequest.password) {
         const validOldPassword = await bcrypt.compare(validRequest.old_password, user.password);
-        if(!validOldPassword){
+        if (!validOldPassword) {
             throw new ResponseError(401, 'Invalid old password');
         }
         data.password = await bcrypt.hash(validRequest.password, 10)
     }
 
     const result = await prismaClient.user.update({
-        where : {
-            username : validRequest.username
+        where: {
+            username: validRequest.username
         },
-        data : data,
-        select : {
-            username : true,
-            email : true,
-            name : true,
-            profile_pic : true
+        data: data,
+        select: {
+            username: true,
+            email: true,
+            name: true,
+            profile_pic: true
         }
     });
 
     return result;
+}
+
+const userRemove = async (username) => {
+    const usernameValid = validate(userGetValidation, username);
+
+    const user = await prismaClient.user.count({
+        where: {
+            username: usernameValid
+        }
+    });
+
+    if (user !== 1) {
+        throw new ResponseError(404, "User not found");
+    }
+
+    await prismaClient.user.delete({
+        where: {
+            username: usernameValid
+        }
+    });
+    return;
 }
 
 export default {
@@ -213,5 +234,6 @@ export default {
     userLogin,
     userGoogleAuth,
     userGet,
-    userUpdate
+    userUpdate,
+    userRemove
 }
